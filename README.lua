@@ -1,4 +1,4 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Librarycho = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 local Window = Library.CreateLib("POLLEEHUB", "DarkTheme")
 
 local Tab = Window:NewTab("misc")
@@ -10,7 +10,7 @@ Section:NewButton("speed besic", "ButtonInfo", function()
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 13        
 end)
 Section:NewKeybind("Toggl UI", "KeybindInfo", Enum.KeyCode.LeftAlt, function()
-	Library:ToggleUI()
+	Librarycho:ToggleUI()
 end)
 Section:NewKeybind("speed clicked op", "KeybindInfo", Enum.KeyCode.R, function()
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 19
