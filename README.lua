@@ -1,5 +1,5 @@
 local Librarycho = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("POLLEEHUB", "DarkTheme")
+local Window = Librarycho.CreateLib("POLLEEHUB", "DarkTheme")
 
 local Tab = Window:NewTab("misc")
 local Section = Tab:NewSection("misc")
