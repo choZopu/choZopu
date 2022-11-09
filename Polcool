@@ -1,0 +1,89 @@
+import tkinter
+
+as tk
+
+2
+
+3
+
+def counting():
+
+4
+
+5
+
+global count
+
+global labellText
+
+6
+
+count+-1
+
+7
+
+8
+
+label1Text.set (str(count))
+
+9
+
+m=tk.Tk()
+
+10
+
+count=0
+
+labellText=tk.StringVar()
+
+label1Text.set (str(count))
+
+11
+
+12
+
+13
+
+m.title('Main window')
+
+14
+
+15
+
+button = tk.Button (m, text='Stop', width=25, command-lambda: m.destroy())
+
+16
+
+button.pack()
+
+17
+
+18
+
+button2 = tk.Button (m, text='Counting', width=25,
+
+command-lambda: counting ())
+
+19
+
+20
+
+button2.pack()
+
+22
+
+21
+
+labell = tk.Label (m, borderwidth-2, relief-"ridge",
+
+textvariable-label1Text, width=30)
+
+22 22
+
+23
+
+สถาบันส่งเสริมการสอนวิทยาศาสตร์และเทค
+
+labell.pack()
+
+m.mainloop()
