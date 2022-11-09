@@ -1,0 +1,30 @@
+import tkinter as tk
+
+def press (n):
+ global expression
+ global label1Text
+ expression = expression+n
+ label1Text.set (expression)
+
+m=tk.Tk()
+m.title('Main window')
+
+expression=''
+label1Text=tk.StringVar()
+label1Text.set(expression)
+
+labell = tk.Label (m, borderwidth=2, relief="ridge", textvariable=label1Text, width=40)
+labell.grid(row=0, columnspan=2)
+
+button1 = tk.Button (m, text='1', width=6, command=lambda: press('1'))
+button1.grid(row=2, column=0)
+button2 = tk.Button (m, text='2', width=6, command=lambda: press('2'))
+button2.grid(row=2, column=1)
+button3 = tk.Button (m, text='3', width=6, command=lambda: press ('3'))
+button3.grid(row=1, column=0)
+button4 = tk.Button (m, text='4', width=6, command=lambda: press ('4'))
+button4.grid(row=1, column=1)
+button= tk.Button (m, text='Stop', width=16, command=lambda: m.destroy())
+button.grid(row=3, columnspan=2)
+
+m.mainloop()
