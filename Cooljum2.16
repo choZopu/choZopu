@@ -1,0 +1,125 @@
+import tkinter as tk
+
+5 def clear():
+
+global expression
+
+global label1Text
+
+result =
+
+expression = "" label1Text.set(result)
+
+Odef press (n):
+
+global expression
+
+global labeliText
+
+expression = expression = n
+
+label1Text.set(expression)
+
+def equal():
+
+try:
+
+global expression
+
+global label1Text
+
+result = str(eval(expression))
+
+expression = result
+
+except:
+
+result = "ERROR"
+
+expression = ""
+
+label1Text.set(result)
+
+5
+
+3
+
+2
+
+5/
+
+m=tk.Tk()
+
+m.title('Main window")
+
+expression = ""
+
+label1Text = tk.StringVar()
+label1Text.set(expression)
+
+label1 tk Label(m, borderwidth = 2, relief="ridge", textvariable = label1Text, width=50)
+
+labelt.grid(row, columnspan = 5)
+
+buttonEqual = tk.Button(m, text, width= 8, command = equal)
+
+buttonEqual.grid(rowspan= 4, column = 4, sticky = "news")
+
+button? = tk.Button(m, text="7, width= 8, command = lambda : press('7'))
+
+button7.grid(row= 1, column = 0)
+
+button8 = tk.Button(m, text '8', width= 8, command = lambda : press('8'))
+
+button8.grid(row= 1, column = 1)
+
+button9= tk.Button(m, text = '9', width = 8, command = lambda : press('9'))
+
+button9.grid(row= 1, column = 2) buttonPlus = tk.Button(m, text='+', width = 8, command = lambda : press('+'))
+
+buttonPlus.grid(row = 1, column = 3)
+
+button4 = tk.Button(m, text = '4', width = 8. command = lambda : press('4"))
+
+button4.grid(row= 2, column = 0)
+
+button5= tk.Button(m, text = "5', width= 8, command = lambda : press('5')) button5.grid(row= 2, column = 1)
+
+button6= tk.Button(m, text = '6', width= 8, command = lambda : press('6')) button6.grid(row= 2, column = 2)
+
+buttonDel = tk.Button(m, text, width= 8, command = lambda : press('-'))
+
+buttonDel.grid(row= 2, column = 3)
+
+button1 = tk.Button(m, text = '1', width = 8, command = lambda : press('1'))
+
+button1.grid(row= 3, column = 0)
+
+button2 = tk.Button(m, text = '2', width= 8, command = lambda : press('2'))
+
+button2.grid(row= 3, column = 1)
+
+button3 = tk.Button(m, text = '3', width=8, command = lambda : press('3'))
+
+button3.grid(row= 3, column = 2)
+
+buttonMul = tk.Button(m, text = "*', width= 8, command = lambda : press("*'))
+buttonMul.grid(row= 3, column = 3)
+
+buttonClear = tk.Button(m, text = 'Clear', width = 8, command=clear)
+
+buttonClear.grid(row = 4, column = 0)
+
+button0 = tk.Button(m, text = '0', width = 8, command = lambda : press('0'))
+
+button0.grid(row = 4, column = 1)
+
+buttonDot = tk.Button(m, text = '.', width = 8, command = lambda : press('.'))
+
+buttonDot.grid(row = 4, column = 2)
+
+buttonDiv = tk.Button(m, text = '/', width = 8, command = lambda : press('/'))
+
+buttonDiv.grid(row= 4, column = 3)
+
+m.mainloop()
