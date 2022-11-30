@@ -1,0 +1,50 @@
+import tkinter as tk
+
+#สร้างฟังก์ชันแปลงค่าระยะทาง
+def convert(n):
+    if(n=='M'):
+        mile=(float(entry1.get()) / 1.60934)
+        label1Text.set(str(entry1.get()+" กิโลเมตร   เท่ากับ   %0.2f"%mile+" ไมล์"))
+    if(n=='K'):
+        kilometer=(float(entry1.get()) * 1.60934)
+        label1Text.set(str(entry1.get()+" ไมล์   เท่ากับ   %0.2f"%kilometer+" กิโลเมตร"))
+
+#สร้างหน้าต่าง m โดยแสดงข้อความบน title ว่าโปรแกรมแปลงระยะทาง 
+m = tk.Tk()
+m.title("โปรแกรมระยะทาง")
+label1Text=tk.StringVar()
+
+#สร้างตัวแปรชื่อ label1 ให้แสดงข้อความว่า "กรอกระยะทาง" ในแถวที่ 0 คอลัมน์ 0
+label1 =tk.Label(text = 'กรอกระยะทาง', width = 10)
+label1.grid(row = 0, column = 0)
+
+#สร้างกล่องข้อความชื่อ entry1 สำหรับกรอกตัวเลข ในแถวที่ 0 คอลัมน์ 1 โดยกำหนดให้ยุบรวมจำนวน 3 คอลัมน์ คือ 1-3 
+entry1 = tk.Entry()
+entry1.grid(row=0,column=1,columnspan = 3, sticky = "news")
+
+#สร้างปุ่มชื่อ button1 สำหรับกดแปลงระยะทางจากกิโลเมตรเป็นไมล์ ขนาดกว้าง 15 อักขระ และเมื่อกดปุ่มนี้ส่งค่า M ไปยังฟังก์ชัน convert
+button1 = tk.Button(text='กิโลเมตร -> ไมล์', width=15, command=lambda:convert('M'))
+button1.grid(row = 2, column = 1)
+
+#สร้างปุ่มชื่อ button2 สำหรับกดแปลงระยะทางจากไมล์เป็นกิโลเมตร ขนาดกว้าง 15 อักขระ และเมื่อกดปุ่มนี้ส่งค่า K ไปยังฟังก์ชัน convert
+button2 = tk.Button(text='ไมล์ -> กิโลเมตร', width=15, command=lambda:convert('K'))
+button2.grid(row = 2, column = 2)
+
+#สร้างตัวแปรชื่อ label2 ให้แสดงข้อความว่า "ผลลัพธ์" ในแถวที่ 1 คอลัมน์ 0
+label2 =tk.Label(text = 'ผลลัพธ์' ,width = 10)
+label2.grid(row = 1, column = 0)
+
+#สร้างตัวแปรชื่อ label3 เพื่อแสดงผลลัพธ์จากการคำนวณในฟังก์ชัน convert โดยให้แสดงผลลัพธ์ในแถวที่ 1 คอลัมน์ 1 
+label3 =tk.Label(textvariable=label1Text ,width = 10)
+label3.grid(row = 1, column = 1, columnspan = 2, sticky = "news")
+
+#สร้างตัวแปรชื่อ label4 เพื่อแสดงข้อความชื่อผู้จัดทำ ในแถวที่ 3 และยุบรวม 3 คอลัมน์
+label4 = tk.Label(m, borderwidth = 2, relief="ridge", text = '...')
+label4.grid(row=3, columnspan = 3, sticky = "news")
+
+#สร้างปุ่มชื่อ buttonClose สำหรับเป็นปุ่มปิดโปรแกรม ไว้ในแถวที่ 4 ยุบรวม 3 คอลัมน์ โดยเมื่อคลิกปุ่มนี้ หน้าต่าง m จะถูกปิดการทำงาน
+buttonClose = tk.Button(m, text='ปิดโปรแกรม', command = lambda : m.destroy())
+buttonClose.grid(row = 4, columnspan = 3 ,sticky = "news")
+
+#เมท็อค mainloop() เป็นคำสั่งให้ปิดหน้าต่าง m
+m.mainloop()
