@@ -1,2 +1,3 @@
-https://cdn.krnl.place/getkey
+local dis = https://cdn.krnl.place/getkey
+dis:Open()
 wait(8)
