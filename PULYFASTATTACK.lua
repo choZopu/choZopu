@@ -97,4 +97,4 @@ spawn(function()
     end
 end)
 
-venyx:SelectPage(venyx.pages[1], true)d
+venyx:SelectPage(venyx.pages[1], true)
