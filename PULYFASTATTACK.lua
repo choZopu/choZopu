@@ -80,7 +80,6 @@ spawn(function()
     if _G.Fastattack then
         pcall(function()
         AttackNoCD()
-        GetCurrentBlade()
     end)
     end
     end
@@ -91,7 +90,6 @@ spawn(function()
     if _G.Fastattack then
         pcall(function()
         AttackNoCD()
-        GetCurrentBlade()
     end)
     end
     end
