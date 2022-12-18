@@ -178,7 +178,7 @@ spawn(function()
     end)
 end)
 
-
+wait(2)
 _G.autorejoin = true
 while _G.autorejoin do wait(.05)
 pcall(function()
