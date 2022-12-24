@@ -474,10 +474,10 @@ do
 				Size = UDim2.new(0, 511, 0, 428),
 				Position = self.position
 			}, 0.2)
-			wait(0.2)
+			wait(0)
 			
 			utility:Tween(topbar, {Size = UDim2.new(1, 0, 0, 38)}, 0.2)
-			wait(0.2)
+			wait(0)
 			
 			container.ClipsDescendants = false
 			self.position = nil
@@ -486,13 +486,13 @@ do
 			container.ClipsDescendants = true
 			
 			utility:Tween(topbar, {Size = UDim2.new(1, 0, 1, 0)}, 0.2)
-			wait(0.2)
+			wait(0)
 			
 			utility:Tween(container, {
 				Size = UDim2.new(0, 511, 0, 0),
 				Position = self.position + UDim2.new(0, 0, 0, 428)
 			}, 0.2)
-			wait(0.2)
+			wait(0)
 		end
 		
 		self.toggling = false
