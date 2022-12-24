@@ -81,6 +81,8 @@ spawn(function()
         pcall(function()
         AttackNoCD()
 	wait(0)
+	AttackNoCD()
+	wait(0)					
 	AttackNoCD()					
     end)
     end
