@@ -76,20 +76,12 @@ section3:addKeybind("Toggle Keybind", Enum.KeyCode.RightControl, function()
 end)
 
 spawn(function()
-  while wait() do
+  while wait(.2) do
     if _G.Fastattack then
         pcall(function()
         AttackNoCD()
-    end)
-    end
-    end
-end)
-
-spawn(function()
-  while wait() do
-    if _G.Fastattack then
-        pcall(function()
-        AttackNoCD()
+	wait(0)
+	AttackNoCD()					
     end)
     end
     end
