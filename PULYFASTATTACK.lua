@@ -71,6 +71,12 @@ section1:addToggle("fastattack", nil, function(v)
 	_G.Fastattack = v
 end)
 
+section1:addToggle("superfastattack1", nil, function(v)
+	_G.SuperFastattack1 = v
+end)
+section1:addToggle("superfastattack2", nil, function(v)
+	_G.SuperFastattack2 = v
+end)
 section3:addKeybind("Toggle Keybind", Enum.KeyCode.RightControl, function()
 	venyx:toggle()
 end)
@@ -78,6 +84,30 @@ end)
 spawn(function()
   while wait(.3) do
     if _G.Fastattack then
+        pcall(function()
+        AttackNoCD()
+	wait(0)
+	AttackNoCD()
+	wait(0)					
+	AttackNoCD()					
+    end)
+    end
+    end
+end)
+
+spawn(function()
+  while wait(0) do
+    if _G.SuperFastattack then
+        pcall(function()
+        AttackNoCD()					
+    end)
+    end
+    end
+end)
+	
+spawn(function()
+  while wait(0) do
+    if _G.SuperFastattack1 then
         pcall(function()
         AttackNoCD()
 	wait(0)
