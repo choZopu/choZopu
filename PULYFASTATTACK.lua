@@ -97,7 +97,7 @@ end)
 
 spawn(function()
   while wait(0) do
-    if _G.SuperFastattack then
+    if _G.SuperFastattack2 then
         pcall(function()
         AttackNoCD()					
     end)
