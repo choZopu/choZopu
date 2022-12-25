@@ -69,14 +69,16 @@ local section1 = page:addSection("fastattack")
 
 section1:addToggle("fastattack", nil, function(v)
 	_G.Fastattack = v
-	retrun addToggle
+	return toggle
 end)
 
 section1:addToggle("superfastattack1", nil, function(v)
 	_G.SuperFastattack1 = v
+	return toggle
 end)
 section1:addToggle("superfastattack2", nil, function(v)
 	_G.SuperFastattack2 = v
+	return toggle
 end)
 section3:addKeybind("Toggle Keybind", Enum.KeyCode.RightControl, function()
 	venyx:toggle()
