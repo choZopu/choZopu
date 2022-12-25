@@ -69,6 +69,7 @@ local section1 = page:addSection("fastattack")
 
 section1:addToggle("fastattack", nil, function(v)
 	_G.Fastattack = v
+	retrun addToggle
 end)
 
 section1:addToggle("superfastattack1", nil, function(v)
