@@ -921,6 +921,15 @@ function click()
    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
 end
 
+function TPFA(P)
+   local Distance = (P.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+   local Speed = 9999999 
+   local Disral = math.floor(Distance/Speed)
+   tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+   tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = P})
+   tween:Play()
+end
+
 function TP(P)
    local Distance = (P.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
    local Speed = 300 
@@ -1079,12 +1088,16 @@ end
 end
 end)
 
+local po = CFrame.new(4049.138916015625, -20, -1813.0712890625)
+
 spawn(function()
     while wait() do
         if _G.AutoFarm then
             pcall(function()
             CheckQuest1()
+    
     if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+    wait(.5)
     TP(CFrameQuest)
     if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
     wait(.1)
@@ -1126,7 +1139,9 @@ spawn(function()
                         v.HumanoidRootPart.Size = Vector3.new(50,50,50)
                         v.HumanoidRootPart.CanCaillde = false
                     until _G.AutoFarm == false or v.Humanoid.Health <= 0
-
+                    end
+                    if not v.Humanoid then
+                        TP(CFrameMon)
                     end
                     if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,NameMon) then
                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
@@ -1158,8 +1173,8 @@ spawn(function()
             CheckQuest1()
             local MyLevel = game.Players.LocalPlayer.Data.Level.Value
             if MyLevel == 375 or MyLevel <= 449 then 
-            if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 57230 then
-              game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4049.138916015625, -6, -1813.0712890625)
+            if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1000 then
+              game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4049.138916015625, -20, -1813.0712890625)
             end
             end
         end)
@@ -1175,7 +1190,7 @@ spawn(function()
         if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
             setfflag("HumanoidParallelRemoveNoPhysics", "False")
             setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-            game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
+            game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(10)
             end
         end
     end)
@@ -1187,7 +1202,7 @@ spawn(function()
         if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
             setfflag("HumanoidParallelRemoveNoPhysics", "False")
             setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
-            game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
+            game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(10)
             end
         end
     end)
