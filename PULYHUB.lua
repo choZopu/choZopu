@@ -923,8 +923,9 @@ end
 
 function TP(P)
    local Distance = (P.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
-   local Speed = 300 -- ความเร็วของมึง
-   tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear)
+   local Speed = 300 
+   local Disral = math.floor(Distance/Speed)
+   tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = P})
    tween:Play()
 end
