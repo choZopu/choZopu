@@ -60,7 +60,7 @@ function AttackNoCD()
     end
 end
 
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/choZopu/choZopu/main/Gui"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/choZopu/choZopu/main/guinew.lua"))()
 local venyx = library.new("PULYHUB", 5013109572)
 local page = venyx:addPage("AUTO", 5012544693)
 local page2 = venyx:addPage("mine", 5012544693)
