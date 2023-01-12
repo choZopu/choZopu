@@ -1,4 +1,4 @@
 _G.Key = "8B7Q-LO6I-YWS8-CQWP"
 _G.SaveConfig = true -- Save Setting true/false
 _G.ConfigMode = 1 -- 0/1
-loadstring(game:HttpGet("https://raw.githubusercontent.com/roothubetc/Bloxfruit/main/PaidScript.txt")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/roothubetc/Bloxfruit/main/PaidScript.txt"))()
