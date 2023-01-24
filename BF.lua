@@ -729,13 +729,13 @@ repeat
                                                     countTime = 0
                                                     StartMagnet = false
                                                     CheckQuest()
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuest
+                                                    TP(CFrameQuest) 
                                                     wait(1.1)
                                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NaemQuest, LevelQuest)
                                                     wait(0.5)
                                                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
                                                 elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
+
                                                     for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
                                                         if v.Name == Ms and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
                                                             if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
