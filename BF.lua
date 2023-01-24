@@ -16,7 +16,7 @@ repeat
                                     ui:Destroy()
                                 end
                                 local Flux = loadstring(game:HttpGet"https://raw.githubusercontent.com/choZopu/choZopu/main/GUIFORSCRIPT.lua")()
-                                local win = Flux:Window("Mythic Hub", "Blox Fruit",_G.Color, Enum.KeyCode.RightControl)
+                                local win = Flux:Window("PULLY Hub", "Blox Fruit",_G.Color, Enum.KeyCode.RightControl)
                                 local tab = win:Tab("AutoFarm⚔️","http://www.roblox.com/asset/?id=4805639000")
                                 local Stats = win:Tab("Stats❤️","http://www.roblox.com/asset/?id=4805639000")
                                 local e = win:Tab("Setting AutoFarm⚙️","http://www.roblox.com/asset/?id=4805639000")
@@ -1036,8 +1036,9 @@ end)
                                                                                 if game.Players.LocalPlayer.Character.HumanoidRootPart.Position ~= CFrame.new(-1926.3221435547, 12.819851875305, 1738.3092041016) then
                                                                                 TP(CFrame.new(-1926.3221435547, 12.819851875305, 1738.3092041016))
                                                                                 wait(1.1)
-                                                                                if (CFthi.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5
+                                                                                if (CFthi.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
                                                                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ZQuestProgress","Begin")
+                                                                                end
                                                                                 wait(1.1)
                                                                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
                                                                                 TP(CFrame.new(-26880.93359375, 22.848554611206, 473.18951416016))
@@ -1069,7 +1070,7 @@ end)
                                                                             end
                                                                         end
                                                                     end
-                                                                end)
+                                                                end
                                                                 game:GetService("RunService").Heartbeat:Connect(function()
                                                                     if _G.AutoThird then
                                                                         game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
@@ -4142,3 +4143,12 @@ end)
                                     end
                                     Teleport()
                                 end)
+
+
+
+
+
+
+
+
+
