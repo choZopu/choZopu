@@ -1,17 +1,10 @@
 function TP(P)
-
    local Distance = (P.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
-
    local Speed = 300 
-
    local Disral = math.floor(Distance/Speed)
-
    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
-
    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = P})
-
    tween:Play()
-
 end
 
                 
@@ -669,15 +662,10 @@ repeat
                                                         if v.Name == "Diablo [Lv. 1750]" or v.Name == "Urban [Lv. 1750]" or v.Name == "Deandre [Lv. 1750]" then
                                                             repeat wait(.1)
                                                                 local Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
-
                                                                 local Speed = 300 
-
                                                                 local Disral = math.floor(Distance/Speed)
-
                                                                 tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
-
                                                                 tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,25,15)})
-
                                                                 tween:Play() 
                                                                 if HideHit then
                                                                     v.HumanoidRootPart.Transparency = 1
@@ -685,7 +673,6 @@ repeat
                                                                     v.HumanoidRootPart.Transparency = 0.8
                                                                 end
                                                                 v.HumanoidRootPart.CanCollide = false
-                                                                v.HumanoidRootPart.Size = Vector3.new(60,60,60)
                                                                 game:GetService'VirtualUser':CaptureController()
                                                                 game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
@@ -701,6 +688,9 @@ repeat
                                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
                                                 wait(1.1)
                                             end
+                                            if _G.EliteHunter == false then
+                                              tween:Cancel()
+                                            end
                                         end
                                     end
                                 end)
@@ -711,73 +701,81 @@ repeat
                                     end
                                 end)
                                 
-                                
-                                
-                                local countTime = 0
-                                local _ = spawn(function()
-                                    while true do wait(1)
-                                        if _G.AutoFarm and game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible then
-                                            countTime = countTime +1
-                                        end
-                                    end
-                                end)
-                                spawn(function ()
-                                    while wait() do
-                                        pcall(function()
-                                            if _G.AutoFarm and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") and game:GetService("Players").LocalPlayer.Character.Humanoid.health > 0 then
-                                                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                                                    countTime = 0
-                                                    StartMagnet = false
-                                                    CheckQuest()
-                                                    TP(CFrameQuest) 
-                                                    wait(1.1)
-                                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NaemQuest, LevelQuest)
-                                                    wait(0.5)
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
-                                                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-
-                                                    for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-                                                        if v.Name == Ms and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                                            if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                                                countTime = 0
-                                                                repeat wait()
-                                                                    game:GetService("VirtualUser"):CaptureController()
-                                                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
-                                                                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(10, 15, 0)
-                                                                    if sethiddenproperty then
-                                                                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                                                                    end
-                                                                    BRINGMOB = v.HumanoidRootPart.CFrame
-                                                                    v.HumanoidRootPart.Size = Vector3.new(60, 0, 60)
-                                                                    v.HumanoidRootPart.CanCollide = false
-                                                                    StartMagnet = true
-                                                                    EquipWeapon(_G.SelectToolWeapon)
-                                                                    if countTime >= 5 then
-                                                                        print("WTF")
-                                                                        v:BreakJoints()
-                                                                    end
-                                                                until not _G.AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                                                StartMagnet = false
-                                                                CheckQuest()
-                                                                countTime = 0
-                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
-                                                            else
-                                                                countTime = 0
-                                                                StartMagnet = false
-                                                                CheckQuest()
-                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuest
-                                                                wait(1.1)
-                                                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NaemQuest, LevelQuest)
-                                                                wait(0.5)
-                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
-                                                            end
-                                                        end
+                                spawn(function()
+                                while wait() do
+                                  if _G.AutoFarm then
+                                     pcall(function()
+                                     CheckQuest1()
+    
+                                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                                wait(.5)
+                                TP(CFrameQuest)
+                                if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
+                                wait(.1)
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",QuestName,QuestNumber)
+                                wait(1)
+                                TP(CFrameMon)
+                                wait(.1)
+                                end
+                                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,NameMon) then
+                                        for v,y in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                            if v.Name == Ms and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid")   then
+                                               if v.Humanoid.Health > 0 then
+                                               repeat wait()
+                                                   Equip(_G.SelectToolWeapon)
+                                                   HealthMin = v.Humanoid.MaxHealth * 100 / 100
+                                                   Magma = (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                                                   if Magma <= 230 then
+                                                    if v.Humanoid.Health > HealthMin then
+                                                       game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,14)
+                                                    else
+                                                       game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,15,0)
                                                     end
-                                                end
-                                            end
-                                        end)
-                                    end
-                                end)
+                                                   end
+                                                   if v.Humanoid.Health > HealthMin then
+                                                   Distance = (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
+                                                   Speed = 300 
+                                                   Disral = math.floor(Distance/Speed)
+                                                   tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                   tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,14)})
+                                                   tween:Play() 
+                                                   else
+                                                   Distance = (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude 
+                                                   Speed = 300 
+                                                   Disral = math.floor(Distance/Speed)
+                                                   tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                   tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,15,0)})
+                                                   tween:Play()
+                                                   end
+                                                   v.HumanoidRootPart.CanCaillde = false
+                                             until _G.AutoFarm == false or v.Humanoid.Health <= 0
+                                             end
+                                             if not v.HumanoidRootPart and y.HumanoidRootPart then
+                                              TP(CFrameMon)
+                                             end
+                                             if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text,NameMon) then
+                                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                             end
+                                             if game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then
+                                               _G.AutoFarm = false
+                                               wait(3)
+                                               _G.AutoFarm = true
+                                             end
+                                             if v.Humanoid.Health <= 0 then
+                                                v.HumanoidRootPart.Size = Vector3.new(0,0,0)
+                                             end
+                                             if _G.AutoFarm == false then
+                                               tween:Cancel()
+                                             end
+                end
+                end
+        end
+        end
+       end)
+end
+end
+end)
                                 
                                 spawn(function()
                                     while wait(.1) do
@@ -786,20 +784,24 @@ repeat
                                             if MyLevel >= 700 and OldWorld then
                                                 _G.AutoFarm = false
                                                 _G.SelectToolWeapon = "Key"
-                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4849.29883, 5.65138149, 719.611877)
-                                                wait(0.5)
+                                                TP(CFrame.new(4849.29883, 5.65138149, 719.611877))
+                                                CFqu = CFrame.new(4849.29883, 5.65138149, 719.611877)
+                                                if (CFqu.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
                                                 local args = {
                                                     [1] = "DressrosaQuestProgress",
                                                     [2] = "Detective"
                                                 }
                                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                                                end
                                                 wait(0.5)
                                                 if game.Players.LocalPlayer.Backpack:FindFirstChild("Key") then
                                                     getgenv().tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Key")
                                                     wait(.4)
                                                     game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
                                                 end
-                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1347.7124, 37.3751602, -1325.6488)
+                                                if game.Players.LocalPlayer.Character.HumanoidRootPart.Position ~= CFrame.new(1347.7124, 37.3751602, -1325.6488) then
+                                                 TP(CFrame.new(1347.7124, 37.3751602, -1325.6488))
+                                                end
                                                 wait(0.5)
                                                 function Click()
                                                     game:GetService'VirtualUser':CaptureController()
@@ -816,7 +818,12 @@ repeat
                                                                     v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
                                                                     v.HumanoidRootPart.BrickColor = BrickColor.new("White")
                                                                     v.HumanoidRootPart.CanCollide = false
-                                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame*CFrame.new(25, 0, 7)
+                                                                    Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                                    Speed = 300 
+                                                                    Disral = math.floor(Distance/Speed)
+                                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                                    tween:Play()           
                                                                     game:GetService'VirtualUser':CaptureController()
                                                                     game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                                                 end)
@@ -825,7 +832,7 @@ repeat
                                                     end
                                                     CheckBoss = false
                                                     wait(0.5)
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1166.23743, 7.65220165, 1728.36487)
+                                                    TP(CFrame.new(-1166.23743, 7.65220165, 1728.36487))
                                                     wait(0.5)
                                                     local args = {
                                                         [1] = "TravelDressrosa" -- OLD WORLD to NEW WORLD
@@ -837,7 +844,7 @@ repeat
                                                         wait(.4)
                                                         game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
                                                     end
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1347.7124, 37.3751602, -1325.6488)
+                                                    TP(CFrame.new(1347.7124, 37.3751602, -1325.6488))
                                                 end 
                                             end
                                         end 
@@ -853,29 +860,25 @@ repeat
                                                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)
                                                             v.HumanoidRootPart.Transparency = 1
                                                             v.HumanoidRootPart.CanCollide = false
-                                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
+                                                            Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                            Speed = 300 
+                                                            Disral = math.floor(Distance/Speed)
+                                                            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 15, 1)})
+                                                            tween:Play() 
                                                             if sethiddenproperty then
                                                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                                             end
                                                         until v.Humanoid.Health == 0 or not _G.Pole
                                                     else
-                                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-7911.14453, 5613.89795, -2272.67822, -0.585544586, -6.38371889e-09, 0.810640216, -2.4883267e-08, 1, -1.00988613e-08, -0.810640216, -2.60847095e-08, -0.585544586)
+                                                        TP(CFrame.new(-7911.14453, 5613.89795, -2272.67822))
                                                     end
                                                 end
                                             end)
                                         end
                                     end
                                 end)
-                                spawn(function()
-                                    while wait() do
-                                        if _G.Pole then
-                                            pcall(function()
-                                                game:GetService'VirtualUser':Button1Down(Vector2.new(0.9,0.9))
-                                                game:GetService'VirtualUser':Button1Up(Vector2.new(0.9,0.9))
-                                            end)
-                                        end
-                                    end
-                                end)
+
                                 spawn(function()
                                     while wait() do
                                         if _G.Pole then
@@ -900,13 +903,18 @@ repeat
                                                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)
                                                             v.HumanoidRootPart.Transparency = 1
                                                             v.HumanoidRootPart.CanCollide = false
-                                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
+                                                            Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                            Speed = 300 
+                                                            Disral = math.floor(Distance/Speed)
+                                                            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                            tween:Play() 
                                                             if sethiddenproperty then
                                                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                                             end
                                                         until v.Humanoid.Health == 0 or not _G.Factory
                                                     else
-                                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(438.675537, 209.555679, -431.071808, 0.988916099, 1.77239485e-08, -0.148475274, -2.25331185e-08, 1, -3.07082537e-08, 0.148475274, 3.37134978e-08, 0.988916099)
+                                                        TP(CFrame.new(438.675537, 209.555679, -431.071808))
                                                     end
                                                 end
                                             end)
@@ -943,13 +951,18 @@ repeat
                                                             v.HumanoidRootPart.Size = Vector3.new(60,60,60)
                                                             v.HumanoidRootPart.Transparency = 1
                                                             v.HumanoidRootPart.CanCollide = false
-                                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
+                                                            Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                            Speed = 300 
+                                                            Disral = math.floor(Distance/Speed)
+                                                            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(2,15,0)})
+                                                            tween:Play() 
                                                             if sethiddenproperty then
                                                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                                             end
                                                         until v.Humanoid.Health == 0 or not _G.Ectoplams
                                                     else
-                                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1104.60217, 125.754921, 32947.1406, -0.237580508, 0, -0.971367836, 0, 1, 0, 0.971367836, 0, -0.237580508)
+                                                        TP(CFrame.new(1104.60217, 125.754921, 32947.1406))
                                                     end
                                                 end
                                             end)
@@ -986,18 +999,7 @@ repeat
                                         end
                                     end
                                 end)
-                                                                tab:Toggle("Auto EliteHunter","",false,function(vu)
-                                                                    _G.EliteHunter = vu
-                                                                end)
-                                                                tab:Toggle("Auto Factory"," ",false,function(t)
-                                                                    _G.Factory = t
-                                                                end)
-                                                                tab:Toggle("AutoFarm Ectoplams"," ",false,function(t)
-                                                                    _G.Ectoplams = t
-                                                                end)
-                                                                tab:Toggle("Auto Pole"," ",false,function(t)
-                                                                    _G.Pole = t
-                                                                end)
+                                                                
                                                                 tab:Toggle("Auto Third Sea","",false, function(vu)
                                                                     _G.AutoThird = vu
                                                                 end)
@@ -1025,314 +1027,20 @@ repeat
                                                                         end
                                                                     end
                                                                 end)
-                                                                spawn(function()
-                                                                    while wait() do
-                                                                        if _G.EliteHunter then
-                                                                            if game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == true and string.find(game.Players.LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Diablo") or string.find(game.Players.LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Urban") or string.find(game.Players.LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Deandre") then
-                                                                                if game:GetService("ReplicatedStorage"):FindFirstChild("Diablo [Lv. 1750]") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban [Lv. 1750]") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre [Lv. 1750]") then
-                                                                                    for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-                                                                                        if v.Name == "Diablo [Lv. 1750]" or v.Name == "Urban [Lv. 1750]" or v.Name == "Deandre [Lv. 1750]" then
-                                                                                            repeat wait(.1)
-                                                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,25,15)
-                                                                                                if HideHit then
-                                                                                                    v.HumanoidRootPart.Transparency = 1
-                                                                                                else
-                                                                                                    v.HumanoidRootPart.Transparency = 0.8
-                                                                                                end
-                                                                                                v.HumanoidRootPart.CanCollide = false
-                                                                                                v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-                                                                                                game:GetService'VirtualUser':CaptureController()
-                                                                                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                                                                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                                                                                            until _G.EliteHunter == false or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                                                                        end
-                                                                                    end
-                                                                                else
-                                                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-5418.392578125, 313.74130249023, -2824.9157714844)
-                                                                                end
-                                                                            else
-                                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-5418.392578125, 313.74130249023, -2824.9157714844)
-                                                                                wait(1.5)
-                                                                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
-                                                                                wait(1.1)
-                                                                            end
-                                                                        end
-                                                                    end
-                                                                end)
-                                                                
-                                                                game:GetService("RunService").Heartbeat:Connect(function()
-                                                                    if _G.EliteHunter then
-                                                                        game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
-                                                                    end
-                                                                end)
-                                                                spawn(function ()
-                                                                    while wait() do
-                                                                        pcall(function()
-                                                                            if _G.AutoFarm and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") and game:GetService("Players").LocalPlayer.Character.Humanoid.health > 0 then
-                                                                                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
-                                                                                    StartMagnet = false
-                                                                                    CheckQuest()
-                                                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuest
-                                                                                    wait(1.1)
-                                                                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NaemQuest, LevelQuest)
-                                                                                    wait(0.5)
-                                                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
-                                                                                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
-                                                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
-                                                                                    for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-                                                                                        if v.Name == Ms and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                                                                                            if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
-                                                                                                repeat wait()
-                                                                                                    game:GetService("VirtualUser"):CaptureController()
-                                                                                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
-                                                                                                    game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(10, 15, 0)
-                                                                                                    if sethiddenproperty then
-                                                                                                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                                                                                                    end
-                                                                                                    BRINGMOB = v.HumanoidRootPart.CFrame
-                                                                                                    v.HumanoidRootPart.Size = Vector3.new(60, 0, 60)
-                                                                                                    v.HumanoidRootPart.CanCollide = false
-                                                                                                    StartMagnet = true
-                                                                                                    EquipWeapon(_G.SelectToolWeapon)
-                                                                                                until not _G.AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-                                                                                                StartMagnet = false
-                                                                                                CheckQuest()
-                                                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
-                                                                                            else
-                                                                                                StartMagnet = false
-                                                                                                CheckQuest()
-                                                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuest
-                                                                                                wait(1.1)
-                                                                                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NaemQuest, LevelQuest)
-                                                                                                wait(0.5)
-                                                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
-                                                                                            end
-                                                                                        end
-                                                                                    end
-                                                                                end
-                                                                            end
-                                                                        end)
-                                                                    end
-                                                                end)
-                                                                
-                                                                spawn(function()
-                                                                    while wait(.1) do
-                                                                        if _G.AutoNew then
-                                                                            local MyLevel = game.Players.localPlayer.Data.Level.Value
-                                                                            if MyLevel >= 700 and OldWorld then
-                                                                                _G.AutoFarm = false
-                                                                                _G.SelectToolWeapon = "Key"
-                                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4849.29883, 5.65138149, 719.611877)
-                                                                                wait(0.5)
-                                                                                local args = {
-                                                                                    [1] = "DressrosaQuestProgress",
-                                                                                    [2] = "Detective"
-                                                                                }
-                                                                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-                                                                                wait(0.5)
-                                                                                if game.Players.LocalPlayer.Backpack:FindFirstChild("Key") then
-                                                                                    getgenv().tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Key")
-                                                                                    wait(.4)
-                                                                                    game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
-                                                                                end
-                                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1347.7124, 37.3751602, -1325.6488)
-                                                                                wait(0.5)
-                                                                                function Click()
-                                                                                    game:GetService'VirtualUser':CaptureController()
-                                                                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                                                                end
-                                                                                if game.Workspace.Enemies:FindFirstChild("Ice Admiral [Lv. 700] [Boss]") and game.Workspace.Map.Ice.Door.CanCollide == false and game.Workspace.Map.Ice.Door.Transparency == 1 then
-                                                                                    CheckBoss = true
-                                                                                    _G.SelectToolWeapon = SelectToolWeaponOld
-                                                                                    for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-                                                                                        if CheckBoss and v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == "Ice Admiral [Lv. 700] [Boss]" then
-                                                                                            repeat wait(.1)
-                                                                                                pcall(function() 
-                                                                                                    v.HumanoidRootPart.Transparency = 0.5
-                                                                                                    v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
-                                                                                                    v.HumanoidRootPart.BrickColor = BrickColor.new("White")
-                                                                                                    v.HumanoidRootPart.CanCollide = false
-                                                                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame*CFrame.new(25, 0, 7)
-                                                                                                    game:GetService'VirtualUser':CaptureController()
-                                                                                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
-                                                                                                end)
-                                                                                            until not CheckBoss or not v.Parent or v.Humanoid.Health <= 0
-                                                                                        end
-                                                                                    end
-                                                                                    CheckBoss = false
-                                                                                    wait(0.5)
-                                                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1166.23743, 7.65220165, 1728.36487)
-                                                                                    wait(0.5)
-                                                                                    local args = {
-                                                                                        [1] = "TravelDressrosa" -- OLD WORLD to NEW WORLD
-                                                                                    }
-                                                                                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
-                                                                                else
-                                                                                    if game.Players.LocalPlayer.Backpack:FindFirstChild("Key") then
-                                                                                        getgenv().tool = game.Players.LocalPlayer.Backpack:FindFirstChild("Key")
-                                                                                        wait(.4)
-                                                                                        game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
-                                                                                    end
-                                                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1347.7124, 37.3751602, -1325.6488)
-                                                                                end 
-                                                                            end
-                                                                        end 
-                                                                    end
-                                                                end)
-                                                                spawn(function()
-                                                                    while wait() do
-                                                                        if _G.Pole then
-                                                                            pcall(function()
-                                                                                for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                                                                                    if v.Name == "Thunder God [Lv. 575] [Boss]" then
-                                                                                        repeat wait()
-                                                                                            v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-                                                                                            v.HumanoidRootPart.Transparency = 1
-                                                                                            v.HumanoidRootPart.CanCollide = false
-                                                                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
-                                                                                            if sethiddenproperty then
-                                                                                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                                                                                            end
-                                                                                        until v.Humanoid.Health == 0 or not _G.Pole
-                                                                                    else
-                                                                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-7911.14453, 5613.89795, -2272.67822, -0.585544586, -6.38371889e-09, 0.810640216, -2.4883267e-08, 1, -1.00988613e-08, -0.810640216, -2.60847095e-08, -0.585544586)
-                                                                                    end
-                                                                                end
-                                                                            end)
-                                                                        end
-                                                                    end
-                                                                end)
-                                                                spawn(function()
-                                                                    while wait() do
-                                                                        if _G.Pole then
-                                                                            pcall(function()
-                                                                                game:GetService'VirtualUser':Button1Down(Vector2.new(0.9,0.9))
-                                                                                game:GetService'VirtualUser':Button1Up(Vector2.new(0.9,0.9))
-                                                                            end)
-                                                                        end
-                                                                    end    
-                                                                end)
-                                                                spawn(function()
-                                                                    while wait() do
-                                                                        if _G.Pole then
-                                                                            pcall(function ()
-                                                                                EquipWeapon(_G.SelectToolWeapon)
-                                                                            end)
-                                                                        end
-                                                                    end
-                                                                end)
-                                                                spawn(function()
-                                                                    while wait() do
-                                                                        if _G.Factory then
-                                                                            pcall(function()
-                                                                                for i,v in pairs(game:GetService("Workspace").Map.Dressrosa.SmileFactory:GetChildren()) do
-                                                                                    if v.Name == "Core" then
-                                                                                        repeat wait()
-                                                                                            if _G.Factory == true then
-                                                                                                _G.AutoFarm = false
-                                                                                            elseif _G.Factory == false then
-                                                                                                _G.AutoFarm = true
-                                                                                            end
-                                                                                            v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-                                                                                            v.HumanoidRootPart.Transparency = 1
-                                                                                            v.HumanoidRootPart.CanCollide = false
-                                                                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
-                                                                                            if sethiddenproperty then
-                                                                                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                                                                                            end
-                                                                                        until v.Humanoid.Health == 0 or not _G.Factory
-                                                                                    else
-                                                                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(438.675537, 209.555679, -431.071808, 0.988916099, 1.77239485e-08, -0.148475274, -2.25331185e-08, 1, -3.07082537e-08, 0.148475274, 3.37134978e-08, 0.988916099)
-                                                                                    end
-                                                                                end
-                                                                            end)
-                                                                        end
-                                                                    end
-                                                                end)
-                                                                spawn(function()
-                                                                    while wait() do
-                                                                        if _G.Factory then
-                                                                            pcall(function()
-                                                                                game:GetService'VirtualUser':Button1Down(Vector2.new(0.9,0.9))
-                                                                                game:GetService'VirtualUser':Button1Up(Vector2.new(0.9,0.9))
-                                                                            end)
-                                                                        end
-                                                                    end
-                                                                end)
-                                                                spawn(function()
-                                                                    while wait() do
-                                                                        if _G.Factory then
-                                                                            pcall(function ()
-                                                                                EquipWeapon(_G.SelectToolWeapon)
-                                                                            end)
-                                                                        end
-                                                                    end
-                                                                end)
-                                                                spawn(function()
-                                                                    while wait() do
-                                                                        if _G.Ectoplams then
-                                                                            pcall(function()
-                                                                                for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                                                                                    Ms = "Ship Deckhand [Lv. 1250]"
-                                                                                    if v.Name == Ms then
-                                                                                        repeat wait()
-                                                                                            v.HumanoidRootPart.Size = Vector3.new(60,60,60)
-                                                                                            v.HumanoidRootPart.Transparency = 1
-                                                                                            v.HumanoidRootPart.CanCollide = false
-                                                                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
-                                                                                            if sethiddenproperty then
-                                                                                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                                                                                            end
-                                                                                        until v.Humanoid.Health == 0 or not _G.Ectoplams
-                                                                                    else
-                                                                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1104.60217, 125.754921, 32947.1406, -0.237580508, 0, -0.971367836, 0, 1, 0, 0.971367836, 0, -0.237580508)
-                                                                                    end
-                                                                                end
-                                                                            end)
-                                                                        end
-                                                                    end
-                                                                end)
-                                                                spawn(function()
-                                                                    while wait() do
-                                                                        if _G.Ectoplams then
-                                                                            pcall(function()
-                                                                                if sethiddenproperty then
-                                                                                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-                                                                                end
-                                                                            end)
-                                                                        end
-                                                                    end
-                                                                end)
-                                                                spawn(function()
-                                                                    while wait() do
-                                                                        if _G.Ectoplams then
-                                                                            pcall(function()
-                                                                                game:GetService'VirtualUser':Button1Down(Vector2.new(0.9,0.9))
-                                                                                game:GetService'VirtualUser':Button1Up(Vector2.new(0.9,0.9))
-                                                                            end)
-                                                                        end
-                                                                    end
-                                                                end)
-                                                                spawn(function()
-                                                                    while wait() do
-                                                                        if _G.Ectoplams then
-                                                                            pcall(function ()
-                                                                                EquipWeapon(_G.SelectToolWeapon)
-                                                                            end)
-                                                                        end
-                                                                    end
-                                                                end)
+                                                                local CFthi = CFrame.new(-1926.3221435547, 12.819851875305, 1738.3092041016)
                                                                 spawn(function()
                                                                     while wait() do
                                                                         if _G.AutoThird then
                                                                             if game:GetService("Players").LocalPlayer.Data.Level.Value >= 1500 and NewWorld then
                                                                                 _G.AutoFarm = false
-                                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1926.3221435547, 12.819851875305, 1738.3092041016)
+                                                                                if game.Players.LocalPlayer.Character.HumanoidRootPart.Position ~= CFrame.new(-1926.3221435547, 12.819851875305, 1738.3092041016) then
+                                                                                TP(CFrame.new(-1926.3221435547, 12.819851875305, 1738.3092041016))
                                                                                 wait(1.1)
+                                                                                if (CFthi.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5
                                                                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ZQuestProgress","Begin")
                                                                                 wait(1.1)
                                                                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
-                                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-26880.93359375, 22.848554611206, 473.18951416016)
+                                                                                TP(CFrame.new(-26880.93359375, 22.848554611206, 473.18951416016))
                                                                                 if game:GetService("Workspace").Enemies:FindFirstChild("rip_indra [Lv. 1500] [Boss]") then
                                                                                     for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
                                                                                         if v.Name == "rip_indra [Lv. 1500] [Boss]" then
@@ -1340,21 +1048,23 @@ repeat
                                                                                                 pcall(function()
                                                                                                     EquipWeapon(_G.SelectToolWeapon)
                                                                                                     AutoHaki()
-                                                                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,25,25)
+                                                                                                    Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                                                                    Speed = 300 
+                                                                                                    Disral = math.floor(Distance/Speed)
+                                                                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                                                                    tween:Play() 
                                                                                                     v.HumanoidRootPart.CanCollide = false
                                                                                                     v.HumanoidRootPart.Transparency = 0.8
-                                                                                                    v.HumanoidRootPart.Size = Vector3.new(70,70,70)
-                                                                                                    game:GetService'VirtualUser':CaptureController()
-                                                                                                    game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                                                                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
                                                                                                     sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                                                                                 end)
                                                                                             until _G.AutoThird == false or v.Humanoid.Health <= 0 or not v.Parent
-                                                                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-26880.93359375, 22.848554611206, 473.18951416016)
+                                                                                            TP(CFrame.new(-26880.93359375, 22.848554611206, 473.18951416016))
                                                                                         end
                                                                                     end
                                                                                 else
-                                                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-26880.93359375, 22.848554611206, 473.18951416016)
+                                                                                    TP(CFrame.new(-26880.93359375, 22.848554611206, 473.18951416016))
                                                                                 end
                                                                             end
                                                                         end
@@ -1461,12 +1171,12 @@ repeat
                                             StatrMagnetDevilFruitMastery = false
                                             CheckQuest()
                                             print()
-                                            LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuest
+                                            TP(CFrameQuest)
                                             wait(1.1)
                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NaemQuest, LevelQuest)
                                         elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
                                             CheckQuest()
-                                            LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
+                                            TP(CFrameMon)
                                             if game:GetService("Workspace").Enemies:FindFirstChild(Ms) then
                                                 pcall(
                                                     function()
@@ -1490,7 +1200,12 @@ repeat
                                                                                 v.HumanoidRootPart.CanCollide = false
                                                                                 v.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
                                                                                 v.HumanoidRootPart.Transparency = 0.75
-                                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,20)
+                                                                                Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                                                Speed = 300 
+                                                                                Disral = math.floor(Distance/Speed)
+                                                                                tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                                                tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0, 0, 20)})
+                                                                                tween:Play() 
                                                                                 if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Dragon-Dragon") then
                                                                                     if SkillZ and v.Humanoid.Health <= HealthMin then
                                                                                         local args = {
@@ -1570,34 +1285,38 @@ repeat
                                                                                 end
                                                                                 v.HumanoidRootPart.CanCollide = false
                                                                                 v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
-                                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
-                                                                                game:GetService'VirtualUser':CaptureController()
-                                                                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))  
+                                                                                Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                                                Speed = 300 
+                                                                                Disral = math.floor(Distance/Speed)
+                                                                                tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                                                tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                                                tween:Play() 
                                                                             end
                                                                             StatrMagnetDevilFruitMastery = true 
                                                                         else
                                                                             StatrMagnet = false
                                                                             CheckQuest()
                                                                             print()
-                                                                            LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuest
+                                                                            TP(CFrameQuest)
                                                                             wait(1.5)
+                                                                            if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
                                                                             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NaemQuest, LevelQuest)
                                                                         end  
                                                                     else
                                                                         CheckQuest() 
-                                                                        game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
+                                                                        TP(CFrameMon)
                                                                     end 
                                                                 until not v.Parent or v.Humanoid.Health <= 0 or AFM == false or LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                                                 StatrMagnetDevilFruitMastery = false
                                                                 CheckQuest() 
-                                                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
+                                                                TP(CFrameMon)
                                                             end
                                                         end
                                                     end
                                                 )
                                             else
                                                 CheckQuest()
-                                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
+                                                TP(CFrameMon)
                                             end 
                                         end
                                     end
@@ -1633,11 +1352,12 @@ repeat
                                     if game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false then  
                                         CheckQuest()
                                         print()
-                                        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuest
+                                        TP(CFrameQuest)
                                         wait(1.1)
+                                        if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NaemQuest, LevelQuest)
                                         wait(0.5)
-                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
+                                        TP(CFrameMon)
                                     elseif game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == true then  
                                         for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
                                             CheckQuest()
@@ -1658,7 +1378,12 @@ repeat
                                                                             v.HumanoidRootPart.CanCollide = false
                                                                             v.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
                                                                             v.HumanoidRootPart.Transparency = 0.75
-                                                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
+                                                                            Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                                            Speed = 300 
+                                                                            Disral = math.floor(Distance/Speed)
+                                                                            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                                            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                                            tween:Play() 
                                                                             local args = {
                                                                                 [1] = v.HumanoidRootPart.Position,
                                                                                 [2] = v.HumanoidRootPart
@@ -1673,30 +1398,34 @@ repeat
                                                                             end
                                                                             v.HumanoidRootPart.CanCollide = false
                                                                             v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
-                                                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
-                                                                            game:GetService'VirtualUser':CaptureController()
-                                                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                                                            Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                                            Speed = 300 
+                                                                            Disral = math.floor(Distance/Speed)
+                                                                            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                                            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                                            tween:Play()
                                                                         end 
                                                                         StatrMagnet = true
                                                                     else
                                                                         CheckQuest()
                                                                         print()
-                                                                        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuest
+                                                                        TP(CFrameQuest)
                                                                         wait(1.1)
+                                                                        if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
                                                                         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NaemQuest, LevelQuest)
                                                                         wait(0.5)
-                                                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
+                                                                        TP(CFrameMon)
                                                                     end
                                                                 else
                                                                     CheckQuest()
-                                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
+                                                                    TP(CFrameMon)
                                                                 end
                                                             end)
                                                         until game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false or GunMastery == false or v.Humanoid.Health <= 0 or not v.Parent or v.Humanoid.Health <= 0
                                                     end
                                                 else
                                                     CheckQuest()
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameMon
+                                                    TP(CFrameMon)
                                                 end
                                             end)
                                         end
@@ -1933,18 +1662,19 @@ repeat
                                                             end
                                                             v.HumanoidRootPart.CanCollide = false
                                                             v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
+                                                            Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                            Speed = 300 
+                                                            Disral = math.floor(Distance/Speed)
+                                                            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                            tween:Play() 
                                                             game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
-                                                            VirtualUser:CaptureController()
-                                                            VirtualUser:ClickButton1(Vector2.new(851, 158), game:GetService("Workspace").Camera.CFrame)
-                                                            game:GetService'VirtualUser':CaptureController()
-                                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                                         end)
                                                     until not FramBoss or not v.Parent or v.Humanoid.Health <= 0
                                                 end
                                             end
                                         else
-                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameBoss
+                                            TP(CFrameBoss)
                                         end
                                     elseif SelectBoss == "Order [Lv. 1250] [Raid Boss]" then
                                         if game:GetService("Workspace").Enemies:FindFirstChild(SelectBoss) then
@@ -1960,29 +1690,35 @@ repeat
                                                             end
                                                             v.HumanoidRootPart.CanCollide = false
                                                             v.HumanoidRootPart.Size = Vector3.new(80, 80, 80)
+                                                            Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                            Speed = 300 
+                                                            Disral = math.floor(Distance/Speed)
+                                                            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                            tween:Play() 
                                                             game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
                                                             game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
                                                             VirtualUser:CaptureController()
                                                             VirtualUser:ClickButton1(Vector2.new(851, 158), game:GetService("Workspace").Camera.CFrame)
-                                                            game:GetService'VirtualUser':CaptureController()
-                                                            game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                                         end)
                                                     until not FramBoss or not v.Parent or v.Humanoid.Health <= 0
                                                 end
                                             end
                                         else
-                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameBoss
+                                            TP(CFrameBoss)
                                         end
                                     else
                                         if game:GetService("Workspace").Enemies:FindFirstChild(SelectBoss) or game:GetService("ReplicatedStorage"):FindFirstChild(SelectBoss) then
                                             if game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                                                 print()
                                                 CheckQuestBoss()
-                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuestBoss
+                                                TP(CFrameQuestBoss)
                                                 wait(1.5)
+												if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
                                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NaemQuestBoss, LevelQuestBoss)
+												end
                                                 wait(1)
-                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameBoss
+                                                TP(CFrameBoss)
                                             elseif game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == true then
                                                 for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
                                                     if FramBoss and v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == MsBoss then
@@ -1996,7 +1732,12 @@ repeat
                                                                 end
                                                                 v.HumanoidRootPart.CanCollide = false
                                                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
+																Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                                Speed = 300 
+                                                                Disral = math.floor(Distance/Speed)
+                                                                tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                                tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                                tween:Play() 
                                                                 game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
                                                                 VirtualUser:CaptureController()
                                                                 VirtualUser:ClickButton1(Vector2.new(851, 158), game:GetService("Workspace").Camera.CFrame)
@@ -2004,7 +1745,6 @@ repeat
                                                         until not FramBoss or not v.Parent or v.Humanoid.Health <= 0 or game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false
                                                     end
                                                 end
-                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameBoss
                                             end
                                         end
                                     end
@@ -2131,7 +1871,6 @@ repeat
                                             end
                                         end   
                                     end
-                                    print(SelectBoss)
                                     KillBossuse = false
                                     if SelectBoss == "Don Swan [Lv. 1000] [Boss]" or SelectBoss == "Cursed Captain [Lv. 1325] [Raid Boss]" or SelectBoss == "Saber Expert [Lv. 200] [Boss]" or SelectBoss == "Mob Leader [Lv. 120] [Boss]" or SelectBoss == "Darkbeard [Lv. 1000] [Raid Boss]" then
                                         if game:GetService("Workspace").Enemies:FindFirstChild(SelectBoss) then
@@ -2147,7 +1886,12 @@ repeat
                                                             end
                                                             v.HumanoidRootPart.CanCollide = false
                                                             v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                                            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
+                                                            Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                            Speed = 300 
+                                                            Disral = math.floor(Distance/Speed)
+                                                            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                            tween:Play() 
                                                             game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
                                                             VirtualUser:CaptureController()
                                                             VirtualUser:ClickButton1(Vector2.new(851, 158), game:GetService("Workspace").Camera.CFrame)
@@ -2158,18 +1902,20 @@ repeat
                                             end
                                         else
                                             CheckQuestBoss()
-                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameBoss
+                                            TP(CFrameBoss)
                                         end
                                     else
                                         if game:GetService("Workspace").Enemies:FindFirstChild(SelectBoss) then
                                             if game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false then
                                                 print()
                                                 CheckQuestBoss()
-                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameQuestBoss
+                                                TP(CFrameQuestBoss)
                                                 wait(1.5)
+												if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
                                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NaemQuestBoss, LevelQuestBoss)
+												end
                                                 wait(1)
-                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameBoss
+                                                TP(CFrameBoss)
                                             elseif game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == true then
                                                 for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
                                                     if FramAllBoss and v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v.Name == MsBoss then
@@ -2184,7 +1930,12 @@ repeat
                                                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                                                 v.HumanoidRootPart.CanCollide = false
                                                                 v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                                                game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
+																Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                                Speed = 300 
+                                                                Disral = math.floor(Distance/Speed)
+                                                                tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                                tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                                tween:Play() 
                                                                 game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
                                                                 VirtualUser:CaptureController()
                                                                 VirtualUser:ClickButton1(Vector2.new(851, 158), game:GetService("Workspace").Camera.CFrame)
@@ -2193,11 +1944,11 @@ repeat
                                                         KillBossuse = true
                                                     end
                                                 end
-                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameBoss
+                                                TP(CFrameBoss)
                                             end
                                         else
                                             CheckQuestBoss()
-                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrameBoss
+                                            TP(CFrameBoss)
                                         end
                                     end
                                     KillBossuse = true
@@ -2437,8 +2188,12 @@ repeat
                                         game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
                                     end
                                     while KillPlayer do wait()
-                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
-                                        game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.Size = Vector3.new(60,60,60)
+									    Distance = (game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                        Speed = 300 
+                                        Disral = math.floor(Distance/Speed)
+                                        tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                        tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                        tween:Play()
                                         game:GetService'VirtualUser':CaptureController()
                                         game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                     end
@@ -2450,8 +2205,12 @@ repeat
                                     end
                                     while KillPlayer do wait()
                                         repeat wait()
-                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
-                                            game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.Size = Vector3.new(60,60,60)
+                                            Distance = (game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                            Speed = 300 
+                                            Disral = math.floor(Distance/Speed)
+                                            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                            tween:Play()
                                             game:GetService'VirtualUser':CaptureController()
                                             game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                         until KillPlayer == false or game.Players.LocalPlayer.Character.Humanoid.Health < 3000
@@ -2487,8 +2246,12 @@ repeat
                                         game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
                                     end
                                     while KillPlayer do wait()
-                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)
-                                        game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.Size = Vector3.new(60,60,60)
+									    Distance = (game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                        Speed = 300 
+                                        Disral = math.floor(Distance/Speed)
+                                        tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                        tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                        tween:Play()
                                         game:GetService'VirtualUser':CaptureController()
                                         game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
                                     end
@@ -2500,7 +2263,13 @@ repeat
                                     while wait() do
                                         if _G.SafeMode then
                                             if game.Players.LocalPlayer.Character.Humanoid.Health <= 3000 then
-                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,50000000000000000,0)
+												pla = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,50000000000000000,0)
+												Distance = (pla.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                Speed = 300 
+                                                Disral = math.floor(Distance/Speed)
+                                                tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game.Players:FindFirstChild(SelectedKillPlayer).Character.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                                tween:Play()
                                             end
                                         end
                                     end
@@ -2640,193 +2409,198 @@ repeat
                                 Teleport:Button("Teleport to SeaBeasts","", function()
                                     for i,v in pairs(game.Workspace.SeaBeasts:GetChildren()) do
                                         if v:FindFirstChild("HumanoidRootPart") then
-                                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,100,0)
+											Distance = (v:FindFirstChild(HumanoidRootPart).Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                            Speed = 300 
+                                            Disral = math.floor(Distance/Speed)
+                                            tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                            tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(25, 0, 7)})
+                                            tween:Play()
                                         end
                                     end
-                                end)
+                                end) 
                                 Teleport:Line()
                                 if NewWorld then
                                     Teleport:Button("First Spot","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(82.9490662, 18.0710983, 2834.98779)
+                                        TP(CFrame.new(82.9490662, 18.0710983, 2834.98779))
                                     end)
                                     Teleport:Button("Cafe","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-385.250916, 73.0458984, 297.388397)
+                                        TP(CFrame.new(-385.250916, 73.0458984, 297.388397))
                                     end)
                                     Teleport:Button("Kingdom of Rose","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = game.Workspace["_WorldOrigin"].Locations["Kingdom of Rose"].CFrame
+                                        TP(game.Workspace["_WorldOrigin"].Locations["Kingdom of Rose"].CFrame)
                                     end)
                                     Teleport:Button("Factroy","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(430.42569, 210.019623, -432.504791)
+                                        TP CFrame.new(430.42569, 210.019623, -432.504791)
                                     end)
                                     Teleport:Button("Swan Mansion","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-390.096313, 331.886475, 673.464966)
+                                        TP CFrame.new(-390.096313, 331.886475, 673.464966)
                                     end)
                                     Teleport:Button("Swan Room","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2302.19019, 15.1778421, 663.811035)
+                                        TP CFrame.new(2302.19019, 15.1778421, 663.811035)
                                     end)
                                     Teleport:Button("Dark Arena","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = game.Workspace["_WorldOrigin"].Locations["Dark Arena"].CFrame
+                                        TP game.Workspace["_WorldOrigin"].Locations["Dark Arena"].CFrame
                                     end)
                                     Teleport:Button("Green bit","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2372.14697, 72.9919434, -3166.51416)
+                                        TP CFrame.new(-2372.14697, 72.9919434, -3166.51416)
                                     end)
                                     Teleport:Button("Colosseum","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1836.58191, 44.5890656, 1360.30652)
+                                        TP CFrame.new(-1836.58191, 44.5890656, 1360.30652)
                                     end)
                                     Teleport:Button("Ghost Island","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-5571.84424, 195.182297, -795.432922)
+                                        TP CFrame.new(-5571.84424, 195.182297, -795.432922)
                                     end)
                                     Teleport:Button("Ghost Island 2nd","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-5931.77979, 5.19706631, -1189.6908)
+                                        TP CFrame.new(-5931.77979, 5.19706631, -1189.6908)
                                     end)
                                     Teleport:Button("Snow Mountain","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1384.68298, 453.569031, -4990.09766)
+                                        TP CFrame.new(1384.68298, 453.569031, -4990.09766)
                                     end)
                                     Teleport:Button("Cold Island","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-6026.96484, 14.7461271, -5071.96338)
+                                        TP CFrame.new(-6026.96484, 14.7461271, -5071.96338)
                                     end)
                                     Teleport:Button("Magma Island","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-5478.39209, 15.9775667, -5246.9126)
+                                        TP CFrame.new(-5478.39209, 15.9775667, -5246.9126)
                                     end)
                                     Teleport:Button("Cursed Ship","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(902.059143, 124.752518, 33071.8125)
+                                        TP CFrame.new(902.059143, 124.752518, 33071.8125)
                                     end)
                                     Teleport:Button("Ice Castle","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(5400.40381, 28.21698, -6236.99219)
+                                        TP CFrame.new(5400.40381, 28.21698, -6236.99219)
                                     end)
                                     Teleport:Button("Forgotten Island","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3043.31543, 238.881271, -10191.5791)
+                                        TP CFrame.new(-3043.31543, 238.881271, -10191.5791)
                                     end)
                                     Teleport:Button("Usoapp Island","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4748.78857, 8.35370827, 2849.57959)
+                                        TP CFrame.new(4748.78857, 8.35370827, 2849.57959)
                                     end)
                                     Teleport:Button("Minisky Island","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-260.358917, 49325.7031, -35259.3008)
+                                        TP CFrame.new(-260.358917, 49325.7031, -35259.3008)
                                     end)
                                     Teleport:Button("Secret room","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2128.38867, 149.874435, -95.2233658, -0.190948173, 1.07975268e-07, -0.981599987, 2.93935e-06, 1, -4.61784907e-07, 0.981599987, -2.97344309e-06, -0.190948173)
+                                        TP CFrame.new(-2128.38867, 149.874435, -95.2233658, -0.190948173, 1.07975268e-07, -0.981599987, 2.93935e-06, 1, -4.61784907e-07, 0.981599987, -2.97344309e-06, -0.190948173)
                                     end)
-                                else
+                                if OldWorld then
                                     Teleport:Button("Start Island","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1071.2832, 16.3085976, 1426.86792)
+                                        TP CFrame.new(1071.2832, 16.3085976, 1426.86792)
                                     end)
                                     Teleport:Button("Marine Start","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2573.3374, 6.88881969, 2046.99817)
+                                        TP CFrame.new(-2573.3374, 6.88881969, 2046.99817)
                                     end)
                                     Teleport:Button("Middle Town","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-655.824158, 7.88708115, 1436.67908)
+                                        TP = CFrame.new(-655.824158, 7.88708115, 1436.67908)
                                     end)
                                     Teleport:Button("Jungle","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1249.77222, 11.8870859, 341.356476)
+                                        TP = CFrame.new(-1249.77222, 11.8870859, 341.356476)
                                     end)
                                     Teleport:Button("Pirate Village","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1122.34998, 4.78708982, 3855.91992)
+                                        TP = CFrame.new(-1122.34998, 4.78708982, 3855.91992)
                                     end)
                                     Teleport:Button("Desert","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1094.14587, 6.47350502, 4192.88721)
+                                        TP = CFrame.new(1094.14587, 6.47350502, 4192.88721)
                                     end)
                                     Teleport:Button("Frozen Village","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1198.00928, 27.0074959, -1211.73376)
+                                        TP = CFrame.new(1198.00928, 27.0074959, -1211.73376)
                                     end)
                                     Teleport:Button("MarineFord","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4505.375, 20.687294, 4260.55908)
+                                        TP = CFrame.new(-4505.375, 20.687294, 4260.55908)
                                     end)
                                     Teleport:Button("Colosseum","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1428.35474, 7.38933945, -3014.37305)
+                                        TP = CFrame.new(-1428.35474, 7.38933945, -3014.37305)
                                     end)
                                     Teleport:Button("Sky 1st Floor","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4970.21875, 717.707275, -2622.35449)
+                                        TP = CFrame.new(-4970.21875, 717.707275, -2622.35449)
                                     end)
                                     Teleport:Button("Sky 2st Floor","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4813.0249, 903.708557, -1912.69055)
+                                        TP = CFrame.new(-4813.0249, 903.708557, -1912.69055)
                                     end)
                                     Teleport:Button("Sky 3st Floor","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-7952.31006, 5545.52832, -320.704956)
+                                        TP = CFrame.new(-7952.31006, 5545.52832, -320.704956)
                                     end)
                                     Teleport:Button("Prison","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4874.8125, 5.6519904136658, 735.57012939453)
+                                        TP CFrame.new(4874.8125, 5.6519904136658, 735.57012939453)
                                     end)
                                     Teleport:Button("Magma Village","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-5231.75879, 8.61593437, 8467.87695)
+                                        TP CFrame.new(-5231.75879, 8.61593437, 8467.87695)
                                     end)
                                     Teleport:Button("UndeyWater City","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(61163.8516, 11.7796879, 1819.78418)
+                                        TP CFrame.new(61163.8516, 11.7796879, 1819.78418)
                                     end)
                                     Teleport:Button("Fountain City","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(5132.7124, 4.53632832, 4037.8562)
+                                        TP CFrame.new(5132.7124, 4.53632832, 4037.8562)
                                     end)
                                     Teleport:Button("House Cyborg's","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(6262.72559, 71.3003616, 3998.23047)
+                                        TP CFrame.new(6262.72559, 71.3003616, 3998.23047)
                                     end)
                                     Teleport:Button("Shank's Room","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1442.16553, 29.8788261, -28.3547478)
+                                        TP CFrame.new(-1442.16553, 29.8788261, -28.3547478)
                                     end)
                                     Teleport:Button("Mob Island","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2850.20068, 7.39224768, 5354.99268)
+                                        TP CFrame.new(-2850.20068, 7.39224768, 5354.99268)
                                     end)
                                 
                                     Teleport:Label("--TelePort NPC--", true)
                                     Teleport:Button("Sword Dealer","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(895.941956, 14.9845877, 1412.76782, -0.939700961, 0, -0.341998369, 0, 1, 0, 0.341998369, 0, -0.939700961)
+                                        TP CFrame.new(895.941956, 14.9845877, 1412.76782, -0.939700961, 0, -0.341998369, 0, 1, 0, 0.341998369, 0, -0.939700961)
                                     end)
                                     Teleport:Button("Weapon Dealer","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-700.12005615234, 7.8522434234619, 1512.2841796875)
+                                        TP CFrame.new(-700.12005615234, 7.8522434234619, 1512.2841796875)
                                     end)
                                     Teleport:Button("NPC randomfruit","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1441.53357, 61.1999283, 7.7518611, 0.499959469, -0, -0.866048813, 0, 1, -0, 0.866048813, 0, 0.499959469)
+                                        TP CFrame.new(-1441.53357, 61.1999283, 7.7518611, 0.499959469, -0, -0.866048813, 0, 1, -0, 0.866048813, 0, 0.499959469)
                                     end)
                                     Teleport:Button("Sword Dealer of the West","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1279.0747070313, 13.752041816711, 3990.2504882813)
+                                        TP CFrame.new(-1279.0747070313, 13.752041816711, 3990.2504882813)
                                     end)
                                     Teleport:Button("darkleg teacher","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-983.618103, 12.450016, 3990.46265, 0.358573437, 0, 0.933501542, 0, 1, 0, -0.933501542, 0, 0.358573437)
+                                        TP CFrame.new(-983.618103, 12.450016, 3990.46265, 0.358573437, 0, 0.933501542, 0, 1, 0, -0.933501542, 0, 0.358573437)
                                     end)
                                     Teleport:Button("Hasan","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1322.017578125, 15.891534805298, 4486.0834960938)
+                                        TP CFrame.new(1322.017578125, 15.891534805298, 4486.0834960938)
                                     end)
                                     Teleport:Button("ability teacher","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1488.6115722656, 37.829216003418, -1412.5043945313)
+                                        TP CFrame.new(1488.6115722656, 37.829216003418, -1412.5043945313)
                                     end)
                                     Teleport:Button("Sick man","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1460.7014160156, 88.573440551758, -1392.4689941406)
+                                        TP CFrame.new(1460.7014160156, 88.573440551758, -1392.4689941406)
                                     end)
                                     Teleport:Button("Sword dealer of the east","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1431.3474121094, 87.752792358398, -1388.0727539063)
+                                        TP CFrame.new(1431.3474121094, 87.752792358398, -1388.0727539063)
                                     end)
                                     Teleport:Button("Advance Weapon Dealer","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4997.841796875, 41.252048492432, 4403.181640625)
+                                        TP CFrame.new(-4997.841796875, 41.252048492432, 4403.181640625)
                                     end)
                                     Teleport:Button("parlus","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4929.2255859375, 96.839538574219, 3868.7917480469)
+                                        TP CFrame.new(-4929.2255859375, 96.839538574219, 3868.7917480469)
                                     end)
                                     Teleport:Button("master sword dealer","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4750.6059570313, 717.65997314453, -2654.2487792969)
+                                        TP CFrame.new(-4750.6059570313, 717.65997314453, -2654.2487792969)
                                     end)
                                     Teleport:Button("usoap","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-8036.05859375, 5756.033203125, -1934.3215332031)
+                                        TP CFrame.new(-8036.05859375, 5756.033203125, -1934.3215332031)
                                     end)
                                     Teleport:Button("Remove Fruit","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(5665.552734375, 64.651931762695, 868.56658935547)
+                                        TP CFrame.new(5665.552734375, 64.651931762695, 868.56658935547)
                                     end)
                                     Teleport:Button("caption to newworld","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1164.2852783203, 8.2123336791992, 1727.9249267578)
+                                        TP CFrame.new(-1164.2852783203, 8.2123336791992, 1727.9249267578)
                                     end)
                                     Teleport:Button("Kung fu teacher","", function()
-                                        game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(61581.54296875, 18.870784759521, 985.88067626953)
+                                        TP CFrame.new(61581.54296875, 18.870784759521, 985.88067626953)
                                     end)
                                 
                                     if Three then
                                         Teleport:Button("Port Town","", function()
-                                            game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-291.60256958008, 43.86499786377, 5459.919921875)
+                                            TP CFrame.new(-291.60256958008, 43.86499786377, 5459.919921875)
                                         end)
                                         Teleport:Button("Hydar Island","", function()
-                                            game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(3558.0576171875, 72.423530578613, -491.10144042969)
+                                            TP CFrame.new(3558.0576171875, 72.423530578613, -491.10144042969)
                                         end)
                                         Teleport:Button("Great Tree","", function()
-                                            game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2250.6081542969, 25.88773727417, -6452.6118164063)
+                                            TP CFrame.new(2250.6081542969, 25.88773727417, -6452.6118164063)
                                         end)
                                         Teleport:Button("Floating Turtle","", function()
-                                            game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-13183.860351563, 332.41317749023, -7663.03515625)
+                                            TP CFrame.new(-13183.860351563, 332.41317749023, -7663.03515625)
                                         end)
                                     end
                                 end
@@ -3475,7 +3249,7 @@ repeat
                                     localplayer=game.Players.LocalPlayer
                                     game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
                                     local torso = game.Players.LocalPlayer.Character.HumanoidRootPart
-                                    local speed=180
+                                    local speed=190
                                     local keys={a=false,d=false,w=false,s=false}
                                     local e1
                                     local e2
@@ -3817,11 +3591,7 @@ repeat
                                 spawn(function()
                                     while wait(.1) do
                                         if _G.autoraid then
-                                            for i,v in pairs(game.Workspace:GetChildren()) do
-                                                if string.find(v.Name, "Fruit") then
-                                                    v.Handle.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
-                                                end
-                                            end
+                                            
                                             if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == false then
                                                 if not game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1")  then
                                                     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("RaidsNpc", "Select", selectchip)
@@ -3860,18 +3630,43 @@ repeat
                                             end)
                                             if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
                                                 if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame*CFrame.new(0,10,0)
+													Distance = (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                    Speed = 300 
+                                                    Disral = math.floor(Distance/Speed)
+                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame*CFrame.new(0,10,0)})
+                                                    tween:Play() 
                                                 elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame*CFrame.new(0,10,0)
+													Distance = (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                    Speed = 300 
+                                                    Disral = math.floor(Distance/Speed)
+                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame*CFrame.new(0,10,0)})
+                                                    tween:Play() 
                                                 elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame*CFrame.new(0,10,0)
+													Distance = (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                    Speed = 300 
+                                                    Disral = math.floor(Distance/Speed)
+                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame*CFrame.new(0,10,0)})
+                                                    tween:Play() 
                                                 elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame*CFrame.new(0,10,0)
+													Distance = (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                    Speed = 300 
+                                                    Disral = math.floor(Distance/Speed)
+                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame*CFrame.new(0,10,0)})
+                                                    tween:Play() 
                                                 elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame*CFrame.new(0,10,0)
+													Distance = (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                    Speed = 300 
+                                                    Disral = math.floor(Distance/Speed)
+                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame*CFrame.new(0,10,0)})
+                                                    tween:Play()
                                                 end
                                             else
-                                                game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-6438.73535, 250.645355, -4501.50684)
+                                                TP(CFrame.new(-6438.73535, 250.645355, -4501.50684))
                                             end
                                             local args = {
                                                 [1] = "Awakener",
@@ -3942,18 +3737,43 @@ repeat
                                             game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
                                             if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") or game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
                                                 if game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5") then
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame*CFrame.new(0,40,0)
+													Distance = (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                    Speed = 300 
+                                                    Disral = math.floor(Distance/Speed)
+                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 5").CFrame*CFrame.new(0,40,0)})
+                                                    
                                                 elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4") then
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame*CFrame.new(0,40,0)
+													Distance = (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                    Speed = 300 
+                                                    Disral = math.floor(Distance/Speed)
+                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 4").CFrame*CFrame.new(0,40,0)})
+                                                    
                                                 elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3") then
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame*CFrame.new(0,40,0)
+													Distance = (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                    Speed = 300 
+                                                    Disral = math.floor(Distance/Speed)
+                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 3").CFrame*CFrame.new(0,40,0)})
+                                                    
                                                 elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2") then
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame*CFrame.new(0,40,0)
+													Distance = (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                    Speed = 300 
+                                                    Disral = math.floor(Distance/Speed)
+                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 2").CFrame*CFrame.new(0,40,0)})
+                                                    
                                                 elseif game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1") then
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame*CFrame.new(0,40,0)
+													Distance = (game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+                                                    Speed = 300 
+                                                    Disral = math.floor(Distance/Speed)
+                                                    tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+                                                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild("Island 1").CFrame*CFrame.new(0,40,0)})
+                                                    
                                                 end
                                             else
-                                                game.Players.localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-6480.84473, 252.764435, -4532.41748, -0.807500541, -1.05677671e-08, 0.589866817, -2.50809293e-08, 1, -1.64191238e-08, -0.589866817, -2.80528596e-08, -0.807500541)
+                                                TP(CFrame.new(-6480.84473, 252.764435, -4532.41748))
                                             end
                                         end
                                     end
@@ -3975,7 +3795,7 @@ repeat
                                                                 sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                                             end
                                                             v.HumanoidRootPart.Transparency = 1
-                                                            v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+                                                            v.HumanoidRootPart.Size = Vector3.new(0, 0, 0)
                                                             v.HumanoidRootPart.CanCollide = false
                                                             v.Humanoid.Health = 0
                                                         until not RaidsArua or not v.Parent or v.Humanoid.Health <= 0
