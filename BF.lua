@@ -668,7 +668,17 @@ repeat
                                                     for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
                                                         if v.Name == "Diablo [Lv. 1750]" or v.Name == "Urban [Lv. 1750]" or v.Name == "Deandre [Lv. 1750]" then
                                                             repeat wait(.1)
-                                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,25,15)
+                                                                local Distance = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
+
+                                                                local Speed = 300 
+
+                                                                local Disral = math.floor(Distance/Speed)
+
+                                                                tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(Disral, Enum.EasingStyle.Linear)
+
+                                                                tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,25,15)})
+
+                                                                tween:Play() 
                                                                 if HideHit then
                                                                     v.HumanoidRootPart.Transparency = 1
                                                                 else
@@ -683,10 +693,10 @@ repeat
                                                         end
                                                     end
                                                 else
-                                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-5418.392578125, 313.74130249023, -2824.9157714844)
+                                                    TP(CFrame.new(-5418.392578125, 313.74130249023, -2824.9157714844))
                                                 end
                                             else
-                                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-5418.392578125, 313.74130249023, -2824.9157714844)
+                                                TP(CFrame.new(-5418.392578125, 313.74130249023, -2824.9157714844)) 
                                                 wait(1.5)
                                                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter")
                                                 wait(1.1)
