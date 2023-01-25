@@ -7,7 +7,17 @@ function TP(P)
    tween:Play()
 end
 
-                
+spawn(function()
+    game:GetService("RunService").Heartbeat:Connect(function()
+        if _G.AutoFarm or _G.AutoNew then
+        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+            setfflag("HumanoidParallelRemoveNoPhysics", "False")
+            setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+            game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(10,10)
+            end
+        end
+    end)
+end)
 repeat
                                     wait(1)
                                 until game.Players.LocalPlayer.Team ~= nil
@@ -469,13 +479,7 @@ repeat
                                 
                                 CheckQuest()
                                 
-                                game:GetService("RunService").Heartbeat:Connect(function() 
-                                    if _G.AutoFarm or _G.Pole or _G.Factory or _G.Ectoplams then
-                                        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
-                                            game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
-                                        end
-                                    end
-                                end)
+                                
                                 _G.SelectToolWeapon = ""
                                 function EquipWeapon(ToolSe)
                                     if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
