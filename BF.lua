@@ -1,3 +1,4 @@
+
 function TP(P)
    local Distance = (P.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
    local Speed = 300 
@@ -19,8 +20,8 @@ spawn(function()
     end)
 end)
 repeat
-                                    wait(1)
-                                until game.Players.LocalPlayer.Team ~= nil
+                                    wait(0.3)
+                                until _G.Key == 1234
                                 local ui = game:GetService("CoreGui"):FindFirstChild("FluxLib")
                                 if ui then
                                     ui:Destroy()
@@ -698,12 +699,18 @@ repeat
                                         end
                                     end
                                 end)
-                                
-                                game:GetService("RunService").Heartbeat:Connect(function()
-                                    if _G.EliteHunter then
-                                        game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
-                                    end
+                                spawn(function()
+                                   game:GetService("RunService").Heartbeat:Connect(function()
+                                       if _G.tweenplay then
+                                       if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+                                          setfflag("HumanoidParallelRemoveNoPhysics", "False")
+                                          setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+                                          game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(10)
+                                       end
+                                       end
+                                    end)
                                 end)
+                                
                                 
                                 spawn(function()
                                 while wait() do
@@ -4146,7 +4153,6 @@ end)
                                     end
                                     Teleport()
                                 end)
-
 
 
 
