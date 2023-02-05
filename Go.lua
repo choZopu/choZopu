@@ -54,6 +54,17 @@ section1:addToggle("GO TO Player", false, function(t)
  _G.TPTPPL = t
 end) 
 
+
+spawn(function()
+    while wait(0) do 
+        if game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then
+        _G.TPTPPL = false
+        wait(3)
+        _G.TPTPPL = true
+        end
+   end
+end)
+
 spawn(function()
  while wait(0.1) do
 	 if _G.TPTPPL then
@@ -91,4 +102,5 @@ section1:addKeybind("Toggle Keybind", Enum.KeyCode.RightControl, function()
 	venyx:toggle()
 end)
 venyx:SelectPage(venyx.pages[1], true)
+
 
