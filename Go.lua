@@ -1,3 +1,7 @@
+if game:GetService("CoreGui"):FindFirstChild("PULYHUB") then
+    game:GetService("CoreGui"):FindFirstChild("PULYHUB"):Destroy()
+end
+
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/choZopu/choZopu/main/Gui"))()
 local venyx = library.new("PULYHUB")
 local page = venyx:addPage("players")
