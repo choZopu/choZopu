@@ -25,17 +25,17 @@ for i,v in pairs(game:GetService("Players"):GetChildren()) do
 end
 end)
 
-section1:addSlider("X", 0, 0, 20, function(x)
+section1:addSlider("X", 0, -20, 20, function(x)
     X = x
     return X
 end)
 
-section1:addSlider("Y", 5, 1, 20, function(y)
+section1:addSlider("Y", 5, -20, 20, function(y)
     Y = y
     return Y
 end)
 
-section1:addSlider("Z", 0, 0, 20, function(z)
+section1:addSlider("Z", 0, -20, 20, function(z)
     Z = z
     return Z
 end)
