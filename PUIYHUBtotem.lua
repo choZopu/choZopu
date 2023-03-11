@@ -39,7 +39,7 @@ spawn(function()
      while wait(0) do
 		 if _G.gotample then
 			pcall(function()
-			 local P = CFrame.new(2956.25830078125, 2500.25146484375, -7215.240234375)
+			 local P = CFrame.new(2956.25830078125, 2200.25146484375, -7215.240234375)
 			 local P1 = CFrame.new(2315.990478515625, 2306.153564453125, -6031.892578125)
              local Distance = (P.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
              local Speed = 290 
