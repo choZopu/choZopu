@@ -12,7 +12,9 @@ local section1 = page:addSection("GoTem")
 section1:addToggle("GoTemNpc", nil, function(t)
  _G.gotample = t
 end)
-
+section1:addKeybind("Toggle Keybind", Enum.KeyCode.RightControl, function()
+	venyx:toggle()
+end)
 
 function TP(P)
    local Distance = (P.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude -- จุดที่จะไป Position Only
