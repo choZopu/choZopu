@@ -24,12 +24,24 @@ section1:addDropdown("Select Player", players, function(abc)
 	return Select
 end)
 
-section1:addButton("Refresh", function()
+section1:addToggle("sp Player", false, function(t)
+ _G.Sp = t
+end) 
+
+spawn(function()
+    while wait(0) do 
+        table.clear(players)
+for i,v in pairs(game:GetService("Players"):GetChildren()) do
+   table.insert(players,v.Name)
+end
+        end
+   end
+end)
     table.clear(players)
 for i,v in pairs(game:GetService("Players"):GetChildren()) do
    table.insert(players,v.Name)
 end
-end)
+
 Speed = 150
 section1:addSlider("speed", 0, 0, 200, function(spe)
     Speed = spe
@@ -54,6 +66,20 @@ section1:addToggle("GO TO Player", false, function(t)
  _G.TPTPPL = t
 end) 
 
+spawn(function()
+ while wait(0.1) do
+     pcall(function()
+	 if _G.Sp then
+	  local plr1 = game.Players.LocalPlayer.Character.Humanoid
+      local plr2 = game.Players:FindFirstChild(Select)
+      repeat wait(.1)
+      game.Workspace.Camera.CameraSubject = plr2.Character.Humanoid
+      until _G.Sp == false
+      game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+	 end
+	end)
+end
+end)
 
 spawn(function()
     while wait(0) do 
