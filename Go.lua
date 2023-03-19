@@ -29,7 +29,7 @@ section1:addToggle("sp Player", false, function(t)
 end) 
 
 spawn(function()
-    while wait(0) do 
+    while wait(0.1) do 
         table.clear(players)
 for i,v in pairs(game:GetService("Players"):GetChildren()) do
    table.insert(players,v.Name)
