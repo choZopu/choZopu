@@ -23,7 +23,9 @@ section1:addDropdown("Select Player", players, function(abc)
 	Select = abc
 	return Select
 end)
-
+section1:addToggle("GO TO Player", false, function(t)
+ _G.TPTPPL = t
+end)
 section1:addToggle("sp Player", false, function(t)
  _G.Sp = t
 end) 
@@ -35,7 +37,6 @@ for i,v in pairs(game:GetService("Players"):GetChildren()) do
    table.insert(players,v.Name)
 end
         end
-   end
 end)
     table.clear(players)
 for i,v in pairs(game:GetService("Players"):GetChildren()) do
@@ -61,10 +62,6 @@ section1:addSlider("Z", 0, -20, 20, function(z)
     Z = z
     return Z
 end)
-
-section1:addToggle("GO TO Player", false, function(t)
- _G.TPTPPL = t
-end) 
 
 spawn(function()
  while wait(0.1) do
@@ -128,5 +125,4 @@ section1:addKeybind("Toggle Keybind", Enum.KeyCode.RightControl, function()
 	venyx:toggle()
 end)
 venyx:SelectPage(venyx.pages[1], true)
-
 
