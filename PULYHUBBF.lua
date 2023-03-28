@@ -1167,24 +1167,6 @@ end
 end)
 
 spawn(function()
-    while wait() do
-        if _G.AutoFarm then
-            pcall(function()
-            CheckQuest1()
-            local MyLevel = game.Players.LocalPlayer.Data.Level.Value
-            if MyLevel == 375 or MyLevel <= 449 then 
-            if (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1000 then
-              game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4049.138916015625, -20, -1813.0712890625)
-            end
-            end
-        end)
-        end
-     end
-end)
-
-
-
-spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
         if _G.tweenplay then
         if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
