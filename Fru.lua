@@ -32,7 +32,7 @@ monta = {
     "The Bomber"  --- 490
 }
   
-  poQ = {
+poQ = {
     CFrame.new(175.402, 40.872, -1147.33),
     CFrame.new(167.006, 38.2762, -934.821),
     CFrame.new(-15.4281, 37.1379, -822.315),
@@ -66,7 +66,7 @@ monta = {
     CFrame.new(9657.15, 64.3577, 3891.76)
 }
   
-  NPC_Quest = {
+NPC_Quest = {
     workspace.NPC.Talk.Woppa, --- 1
     workspace.NPC.Talk.Abu, --- 10
     workspace.NPC.Talk.Boss, --- 15
@@ -95,8 +95,8 @@ monta = {
     workspace.NPC.Talk.Sofen, --- 365
     workspace.NPC.Talk.Jovahn, --- 390
     ------ 440 
-    workspace.NPC.Talk.Bee --- 440
-    workspace.NPC.Talk.Emmie --- 465
+    workspace.NPC.Talk.Bee, --- 440
+    workspace.NPC.Talk.Emmie, --- 465
     workspace.NPC.Talk.Syn --- 490
   
 }
