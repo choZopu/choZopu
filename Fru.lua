@@ -459,6 +459,16 @@ spawn(function()
     end)
 end)
 
+local Workspace = game:GetService("Workspace")
+local CoreGui = game:GetService("CoreGui")
+local Players = game:GetService("Players")
+local Noclip = Instance.new("ScreenGui")
+local BG = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local Toggle = Instance.new("TextButton")
+local Plr = Players.LocalPlayer
+local Clipon = false
+
 spawn(function()
     pcall(function()
         while true do wait(0)
