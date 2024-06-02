@@ -111,7 +111,7 @@ function CheckQuest()
         elseif _G.Name == "Bandit Leader" then
             Ms = game.Workspace.NPC.Fight.Bandits["Bandit Leader"]
             CFrameQ = poQ[2]
-            Name_NPC_Quest NPC_Quest[2]
+            Name_NPC_Quest = NPC_Quest[2]
         elseif _G.Name == "Reiner's Subordinate" then
             Ms = game.Workspace.NPC.Fight.Reiner["Reiner's Subordinate"]
             CFrameQ = poQ[3]
